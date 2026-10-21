@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<title>Открыть чат в Claude</title>
+</head>
+<body style="font: 16px system-ui; padding: 2rem">
+<p id="msg">Открываю чат в Claude…</p>
+<p><a id="open" hidden>Открыть в Claude</a></p>
+<script>
+  // Ведёт только на claude://claude.ai/epitaxy/<id сессии>, иначе отказ: не open redirect.
+  // id идёт после #, поэтому на сервер не уходит.
+  var id = decodeURIComponent(location.hash.slice(1));
+  var msg = document.getElementById("msg");
+  if (!/^local_[0-9a-f-]{36}$/.test(id)) {
+    msg.textContent = "Нужен id сессии после #, например …/#local_<uuid>.";
+  } else {
+    var target = "claude://claude.ai/epitaxy/" + id;
+    var a = document.getElementById("open");
+    a.href = target;
+    a.hidden = false;
+    location.href = target;
+  }
+</script>
+</body>
+</html>
